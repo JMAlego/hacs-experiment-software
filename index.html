@@ -1,0 +1,405 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8"> 
+    <title>Experiment</title>
+    <style>
+      body{
+        font-family: Ariel, sans-serif;
+        background: #fff;
+        transition: background 1s;
+        font-size: 18px;
+      }
+      .container{
+        width: 60%;
+        margin: auto;
+        padding: 20px;
+      }
+      input[type=text],input[type=email]{
+        display: block; 
+        width: 70%;
+        clear: both;
+        margin-bottom: 15px;
+      }
+      button{
+        display: block; 
+        clear: both;
+      }
+      .screen{
+        display: none;
+      }
+      .reset{
+        display: none;
+        /* Picked because it's a middle grey, not too dark not too light. */
+        background: #888;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+      #test{
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow-y: scroll;
+        display: none;
+        padding: 4% 25%;
+      }
+      .style{
+        width: 50%;
+        height: 80px;
+        display: block;
+        margin: 20px 0px;
+        padding: 20px;
+        border: 1px solid #888;
+      }
+      form ul, form ul li{
+        list-style: none;
+      }
+    </style>
+    <script>
+      /*
+          A note from the author.
+          
+          Yes I should have used proper class based abstraction but that would be more
+          effort and would produce no benifits in this case =P. Call me a lazy programmer
+          if you must but it took a lot less time this way so I'll call it "efficient" XD
+          
+           - Jacob
+      */
+       
+      /* Constants */
+      
+      const yorkEmail = /[a-zA-Z]{1,4}[0-9]{1,5}\@york\.ac\.uk/;
+      
+      const colour = {
+        //red: "#ff0000",
+        //green: "#00ff00",
+        //blue: "#0000ff",
+        black: "#000000",
+        white: "#ffffff",
+        sepia: "#5e2612",
+        offWhite: "#f5efdc"
+      };
+      
+      const resetDelay = 5000;
+      
+      const texts = [
+        {
+          title: "Test 0",
+          body: "Some body, can have html in it for paragraphs etc.",
+          question: "What?",
+          answers: [
+            "1",
+            "2",
+            "3"
+          ],
+          correctIndex: 0
+        },
+        {
+          title: "Test 1",
+          body: "Some body, can have html in it for paragraphs etc.",
+          question: "What?",
+          answers: [
+            "1",
+            "2",
+            "3"
+          ],
+          correctIndex: 0
+        },
+        {
+          title: "Test 2",
+          body: "Some body, can have html in it for paragraphs etc.",
+          question: "What?",
+          answers: [
+            "1",
+            "2",
+            "3"
+          ],
+          correctIndex: 0
+        },
+        {
+          title: "Test 3",
+          body: "Some body, can have html in it for paragraphs etc.",
+          question: "What?",
+          answers: [
+            "1",
+            "2",
+            "3"
+          ],
+          correctIndex: 0
+        },
+        {
+          title: "Test 4",
+          body: "Some body, can have html in it for paragraphs etc.",
+          question: "What?",
+          answers: [
+            "1",
+            "2",
+            "3"
+          ],
+          correctIndex: 0
+        },
+        {
+          title: "Test 5",
+          body: "Some body, can have html in it for paragraphs etc.",
+          question: "What?",
+          answers: [
+            "1",
+            "2",
+            "3"
+          ],
+          correctIndex: 0
+        },
+      ];
+      
+      const combinations = [
+        { //Colour Combination 0, black on white
+          foreground: colour.black,
+          background: colour.white,
+          name: "black on white"
+        },
+        { //Colour Combination 1, white on black
+          foreground: colour.white,
+          background: colour.black,
+          name: "white on black"
+        },
+        { //Colour Combination 2, sepia on off white
+          foreground: colour.sepia,
+          background: colour.offWhite,
+          name: "sepia on off-white"
+        }
+      ];
+      
+      /* Variables */
+      
+      // Stores results, should be saved to file
+      var results = {
+        subject:{
+          code:""
+        },
+        combinations:[],
+        preference:[]
+      };
+      
+      // Stores randomised setup, not stored only used during processing
+      var setup = {
+        warmups: [],
+        actual: []
+      };
+      
+      /* Functions */
+      
+      function onload(){
+        if(texts.length / 2 != combinations.length){
+          throw "Something is horribly wrong with the number of tests";
+        }
+        var combos = shuffle(combinations.slice());
+        combos = combos.concat(shuffle(combinations.slice()));
+        var txts = shuffle(texts.slice());
+        
+        for(i in texts){
+          if(i < combinations.length){
+            setup.warmups.push({
+              colours: combos[i],
+              text: txts[i]
+            });
+          }else{
+            setup.actual.push({
+              colours: combos[i],
+              text: txts[i]
+            });
+          }
+        }
+
+        $("#screen-start").show();
+      }
+      
+      function shuffle(array) {
+        let counter = array.length;
+        while (counter > 0) {
+            let index = Math.floor(Math.random() * counter);
+            counter--;
+            let temp = array[counter];
+            array[counter] = array[index];
+            array[index] = temp;
+        }
+        return array;
+      }
+      
+      function changeScreen(oldScreen, newScreen){
+        $("#screen-" + oldScreen).hide();
+        $("#screen-" + newScreen).show();
+      }
+      
+      function changeScreenReset(oldScreen, newScreen){
+        $("#screen-" + oldScreen).hide();
+        $(".reset").show();
+        $("#screen-" + newScreen).show();
+        setTimeout(function(){$(".reset").hide()}, resetDelay)
+      }
+      
+      function startExperiment(){
+        if($("#code").val() != ""){
+          results.subject.code = $("#code").val();
+          changeScreen("start", "instructions");
+        }
+      }
+      
+      function getCurrentCombination(){
+        return setup.warmups.length > 0 || setup.actual.length > 0 ? (setup.warmups.length > 0 ? setup.warmups[0] : setup.actual[0]) : undefined;
+      }
+      
+      function nextCombination(){
+        if(setup.warmups.length > 0 || setup.actual.length > 0){
+          if(setup.warmups.length > 0){
+            setup.warmups.shift();
+          }else{
+            setup.actual.shift();
+          }
+        }
+      }
+      
+      function taskComplete(startTime){
+        var endTime = Date.now();
+        var combo = getCurrentCombination();
+        
+        $("#answers").html("");
+        
+        for(i in combo.text.answers){
+          $("#answers").append($("<li>").append($("<label>", {"for": "answer"+i}).text(" " + combo.text.answers[i]))
+                                        .prepend($("<input>", {type: "radio", name: "answers", value: i, id: "answer"+i})));
+        }
+        
+        $("#question").text(combo.text.question);
+        
+        $("#answer").attr("onclick", 'quizComplete('+startTime+', '+endTime+')');
+
+        changeScreen("waiting", "question");
+        $("#test").hide();
+      }
+      
+      function quizComplete(startTime, endTime){
+        var quizTime = Date.now();
+        var combo = getCurrentCombination();
+        var result = {
+          readingTime: endTime - startTime,
+          answeringTime: quizTime - endTime,
+          colours: combo.colours,
+          answer: $('input[name=answers]:checked', '#answers').val(),
+          correct: $('input[name=answers]:checked', '#answers').val() == combo.text.correctIndex,
+          text: combo.text,
+        };
+        
+        results.combinations.push(result);
+        nextCombination();
+        
+        changeScreenReset("question", "waiting");
+      }
+      
+      function doCombination(){
+        var combo = getCurrentCombination();
+        
+        if(combo === undefined){
+          for(i in combinations){
+            $("#styles").append(
+              $("<div>", {"class": "style", "style": "background: " + combinations[i].background + "; color: " + combinations[i].foreground + ";"}).html("Example text 123")
+            );
+          }
+          changeScreen("waiting", "preference");
+        }else{
+          $("#test").html("")
+                    .append("<h1>" + combo.text.title + "</h1>")
+                    .append(combo.text.body)
+                    .append('<p><button onclick="taskComplete('+Date.now()+')">Finished</button></p>')
+                    .css("background", combo.colours.background)
+                    .css("color", combo.colours.foreground)
+                    .show();
+        }
+      }
+      
+      function preferenceComplete(){
+        results.preference.push($('input[name=pref-1]:checked', '#preference').val());
+        results.preference.push($('input[name=pref-2]:checked', '#preference').val());
+        results.preference.push($('input[name=pref-3]:checked', '#preference').val());
+        submitData();
+        changeScreen('preference', 'thanks');
+      }
+      
+      function submitData(){
+        $.get("submit.php", { code: atob("ZDk5MjMxMThkZDA4NjE0ODZiMzU2OWJhMDgwNDg2YTQ="), data: JSON.stringify(results) });
+      }
+    </script>
+    <script src="jquery.js"></script>
+  </head>
+  <body onload="onload()">
+    <div class="container">
+      <div class="screen" id="screen-start">
+        <h2>Welcome</h2>
+        <p>Please enter your participant code below.</p>
+        <p><input id="code" type="text" placeholder="Example: 112"></p>
+        <p><button onclick="startExperiment()">Continue</button></p>
+      </div>
+      <div class="screen" id="screen-instructions">
+        <p>Any further instructions can be put here.</p>
+        <p>We might not need this page...</p>
+        <p><button onclick="changeScreenReset('instructions', 'waiting')">Continue</button></p>
+      </div>
+      <div class="screen" id="screen-waiting">
+        <!-- Just to make sure they are ready -->
+        <p><button onclick="doCombination()">Continue</button></p>
+      </div>
+      <div class="screen" id="screen-question">
+        <p id="question"></p>
+        <form>
+          <ul id="answers">
+          </ul>
+        </form>
+        <p><button id="answer">Continue</button></p>
+      </div>
+      <div class="screen" id="screen-preference">
+        <p>Below are examples of the three combinations of background and foreground colour used for the texts you just read.</p>
+        <div id="styles">
+        </div>
+        <p>Please answer the following questions about the three colour combinations.</p>
+        <!-- This section isn't built dynamically becuase I ran out of time, it is entirely possible to write it dynamically though -->
+        <form id="preference">
+          <p>How would you rate your preference for combination 1 (black on white)</p>
+          <ul>
+            <li><input type="radio" name="pref-1" value="5" id="pref-1-5" ><label for="pref-1-5">Very much prefered</label></li>
+            <li><input type="radio" name="pref-1" value="4" id="pref-1-4" ><label for="pref-1-4">Above averegely prefered</label></li>
+            <li><input type="radio" name="pref-1" value="3" id="pref-1-3" ><label for="pref-1-3">Averagely Prefered</label></li>
+            <li><input type="radio" name="pref-1" value="2" id="pref-1-2" ><label for="pref-1-2">Below averagely prefered</label></li>
+            <li><input type="radio" name="pref-1" value="1" id="pref-1-1" ><label for="pref-1-1">Not at all prefered</label></li>
+          </ul>
+          <p>How would you rate your preference for combination 2 (white on black)</p>
+          <ul>
+            <li><input type="radio" name="pref-2" value="5" id="pref-2-5" ><label for="pref-2-5">Very much prefered</label></li>
+            <li><input type="radio" name="pref-2" value="4" id="pref-2-4" ><label for="pref-2-4">Above averegely prefered</label></li>
+            <li><input type="radio" name="pref-2" value="3" id="pref-2-3" ><label for="pref-2-3">Averagely Prefered</label></li>
+            <li><input type="radio" name="pref-2" value="2" id="pref-2-2" ><label for="pref-2-2">Below averagely prefered</label></li>
+            <li><input type="radio" name="pref-2" value="1" id="pref-2-1" ><label for="pref-2-1">Not at all prefered</label></li>
+          </ul>
+          <p>How would you rate your preference for combination 3 (sepia on off-white)</p>
+          <ul>
+            <li><input type="radio" name="pref-3" value="5" id="pref-3-5" ><label for="pref-3-5">Very much prefered</label></li>
+            <li><input type="radio" name="pref-3" value="4" id="pref-3-4" ><label for="pref-3-4">Above averegely prefered</label></li>
+            <li><input type="radio" name="pref-3" value="3" id="pref-3-3" ><label for="pref-3-3">Averagely Prefered</label></li>
+            <li><input type="radio" name="pref-3" value="2" id="pref-3-2" ><label for="pref-3-2">Below averagely prefered</label></li>
+            <li><input type="radio" name="pref-3" value="1" id="pref-3-1" ><label for="pref-3-1">Not at all prefered</label></li>
+          </ul>
+        </form>
+        <p><button onclick="preferenceComplete()">Continue</button></p>
+      </div>
+      <div class="screen" id="screen-thanks">
+        <h1>Thank You</h1>
+        <p>Thank you for participating in this study.</p>
+      </div>
+    </div>
+    <div class="reset"></div>
+    <div id="test"></div>
+  </body>
+</html>

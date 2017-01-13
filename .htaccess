@@ -1,0 +1,11 @@
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^data(/|/.+)?$ - [R=404,L]
+  RewriteRule ^contributing.txt(/|/.+)?$ - [R=404,L]
+  RewriteRule ^style.txt(/|/.+)?$ - [R=404,L]
+  RewriteRule ^running.txt(/|/.+)?$ - [R=404,L]
+  RewriteRule ^server.js(/|/.+)?$ - [R=404,L]
+  RewriteRule ^run.bat(/|/.+)?$ - [R=404,L]
+</IfModule>

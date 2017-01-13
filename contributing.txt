@@ -1,0 +1,6 @@
+Rules:
+  1) All changes to master must go via pull request.
+  2) You cannot merge your own pull requests.
+  3) Give commits a reasonable name.
+  
+(Unless no one else is contributing, in which case: go wild.)
