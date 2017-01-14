@@ -298,14 +298,20 @@
       }
       
       function quizComplete(startTime, endTime){
+        var userAnswer = $('input[name=answers]:checked', '#answers').val();
+        if (userAnswer == undefined){
+          alert("Please select an answer to the question. If you do not know the answer; guess.");
+          return;
+        }
+
         var quizTime = Date.now();
         var combo = getCurrentCombination();
         var result = {
           readingTime: endTime - startTime,
           answeringTime: quizTime - endTime,
           colours: combo.colours,
-          answer: $('input[name=answers]:checked', '#answers').val(),
-          correct: $('input[name=answers]:checked', '#answers').val() == combo.text.correctIndex,
+          answer: userAnswer,
+          correct: userAnswer == combo.text.correctIndex,
           text: combo.text,
         };
         
