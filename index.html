@@ -38,15 +38,17 @@
         left: 0;
         right: 0;
       }
-      #test{
+      #test, #screen-question{
         position: fixed;
         top: 0;
         bottom: 0;
         left: 0;
         right: 0;
         overflow-y: scroll;
-        display: none;
         padding: 4% 25%;
+      }
+      #test{
+        display: none;
       }
       .style{
         width: 50%;
@@ -290,6 +292,9 @@
 
         changeScreen("waiting", "question");
         $("#test").hide();
+        $("#screen-question")
+          .css("background", combo.colours.background)
+          .css("color", combo.colours.foreground);
       }
       
       function quizComplete(startTime, endTime){
