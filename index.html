@@ -343,9 +343,16 @@
       }
       
       function preferenceComplete(){
-        results.preference.push($('input[name=pref-1]:checked', '#preference').val());
-        results.preference.push($('input[name=pref-2]:checked', '#preference').val());
-        results.preference.push($('input[name=pref-3]:checked', '#preference').val());
+        var pref1 = $('input[name=pref-1]:checked', '#preference').val();
+        var pref2 = $('input[name=pref-2]:checked', '#preference').val();
+        var pref3 = $('input[name=pref-3]:checked', '#preference').val();
+        if (pref1 == undefined || pref2 == undefined || pref3 == undefined){
+          alert("Please answer all questions and then click continue.");
+          return;
+        }
+        results.preference.push(pref1);
+        results.preference.push(pref2);
+        results.preference.push(pref3);
         submitData();
         changeScreen('preference', 'thanks');
       }
