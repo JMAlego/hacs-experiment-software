@@ -38,7 +38,7 @@
         left: 0;
         right: 0;
       }
-      #test, #screen-question{
+      #test, #screen-question, #screen-waiting{
         position: fixed;
         top: 0;
         bottom: 0;
@@ -312,6 +312,12 @@
         results.combinations.push(result);
         nextCombination();
         
+        combo = getCurrentCombination();
+        if (combo){
+          $("#screen-waiting")
+            .css("background", combo.colours.background)
+            .css("color", combo.colours.foreground);
+        }
         changeScreenReset("question", "waiting");
       }
       
