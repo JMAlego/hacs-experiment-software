@@ -61,6 +61,12 @@
       form ul, form ul li{
         list-style: none;
       }
+      button{
+        /* Button takes colours from parent */
+        color: inherit;
+        background-color: inherit;
+        border-radius: 5px;
+      }
     </style>
     <script>
       /*
@@ -251,6 +257,12 @@
         $("#screen-" + oldScreen).hide();
         $(".reset").show();
         $("#screen-" + newScreen).show();
+        combo = getCurrentCombination();
+        if (combo){
+          $("#screen-waiting")
+            .css("background", combo.colours.background)
+            .css("color", combo.colours.foreground);
+        }
         setTimeout(function(){$(".reset").hide()}, resetDelay)
       }
       
@@ -318,12 +330,6 @@
         results.combinations.push(result);
         nextCombination();
         
-        combo = getCurrentCombination();
-        if (combo){
-          $("#screen-waiting")
-            .css("background", combo.colours.background)
-            .css("color", combo.colours.foreground);
-        }
         changeScreenReset("question", "waiting");
       }
       
@@ -384,6 +390,7 @@
       </div>
       <div class="screen" id="screen-waiting">
         <!-- Just to make sure they are ready -->
+        <p>When you are ready begin the next task, click continue.</p>
         <p><button onclick="doCombination()">Continue</button></p>
       </div>
       <div class="screen" id="screen-question">
