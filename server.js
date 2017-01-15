@@ -105,10 +105,22 @@ function handleRequest(request, response){
     var query = urlParts.query;
     if(query.code !== undefined && query.data !== undefined && checkCryptoNonceKey(query.code)){
       removeCryptoNonceKey(query.code);
-      var currentFile = fs.readFileSync("data/data.json", 'utf8');
+      const dataDir = "data";
+      const dataFile = "data.json";
+      var dataFilePath = dataDir + "/" + dataFile;
+      try {
+        fs.statSync(dataDir);
+      }
+      catch (e) {
+        fs.mkdir(dataDir);
+      }
+      if (!fs.exists(dataFilePath)){
+        fs.writeFileSync(dataFilePath, "[]", "utf8");
+      }
+      var currentFile = fs.readFileSync(dataFilePath, 'utf8');
       var jsonData = JSON.parse(currentFile);
       jsonData.push(JSON.parse(query.data));
-      fs.writeFileSync("data/data.json", JSON.stringify(jsonData), 'utf8');
+      fs.writeFileSync(dataFilePath, JSON.stringify(jsonData), 'utf8');
     }
     response.end();
   }
