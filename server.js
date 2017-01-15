@@ -50,7 +50,7 @@ function passHash(password){
 var cryptoNonceKeys = {};
 
 function generateCryptoNonceKey(){
-  let key = crypto.createHmac('sha256', "For reference: https://en.wikipedia.org/wiki/Cryptographic_nonce")
+  var key = crypto.createHmac('sha256', "For reference: https://en.wikipedia.org/wiki/Cryptographic_nonce")
                    .update(crypto.randomBytes(32))
                    .digest('hex');
   cryptoNonceKeys[key] = Date.now();
