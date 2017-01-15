@@ -370,7 +370,7 @@
       }
       
       function submitData(){
-        $.get("submit.php", { code: atob("ZDk5MjMxMThkZDA4NjE0ODZiMzU2OWJhMDgwNDg2YTQ="), data: JSON.stringify(results) });
+        $.get("submit.php", { code: atob("%CRYPTONONCEKEY%"), data: JSON.stringify(results) });
       }
     </script>
     <script src="jquery.js"></script>
