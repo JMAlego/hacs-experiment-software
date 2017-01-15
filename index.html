@@ -234,6 +234,8 @@
         registerEnterHandler();
 
         $("#screen-start").show();
+        var seconds = Math.ceil(resetDelay / 1000);
+        $("#time-seconds").html(seconds);
       }
       
       function shuffle(array) {
@@ -346,6 +348,7 @@
         }else{
           $("#test").html("")
                     .append("<h1>" + combo.text.title + "</h1>")
+                    .append("<h2>Please read this text carefuly and then click the button.</h2>")
                     .append(combo.text.body)
                     .append('<p><button onclick="taskComplete('+Date.now()+')">Finished</button></p>')
                     .css("background", combo.colours.background)
@@ -384,13 +387,14 @@
         <p><button id="submitcode" onclick="startExperiment()">Continue</button></p>
       </div>
       <div class="screen" id="screen-instructions">
-        <p>Any further instructions can be put here.</p>
-        <p>We might not need this page...</p>
+        <h2>Instructions</h2>
+        <p>You will be shown three short texts. For each one, please read the entire text, then click the button to continue to the question. Answer the question, guessing the answer if you don't know it, and then click continue. Between each text you will be shown a grey screen for <span id="time-seconds">?</span> seconds.</p>
+        <p>You will need to do this twice. The second set of three texts will start automatically after you have completed the first three.</p>
         <p><button onclick="changeScreenReset('instructions', 'waiting')">Continue</button></p>
       </div>
       <div class="screen" id="screen-waiting">
         <!-- Just to make sure they are ready -->
-        <p>When you are ready begin the next task, click continue.</p>
+        <p>When you are ready begin this task, click continue.</p>
         <p><button onclick="doCombination()">Continue</button></p>
       </div>
       <div class="screen" id="screen-question">
