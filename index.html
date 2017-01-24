@@ -93,7 +93,7 @@
         offWhite: "#f5efdc"
       };
       
-      const resetDelay = 50;
+      const resetDelay = 20000;// 20 seconds
       
       const texts = [
         {
@@ -120,7 +120,7 @@
         },
         {
           title: "Break a leg",
-          body: "<p>In the late 1950s, a groups of circus performers were traveling across mainland europe with their circus show. During their first year, they stopped at thirty four locations. At each stop they set up their circus tent on a Friday, put on a show on the Friday evening and then performed all throughout the Saturday before dismantling the tent on Sunday to move to the next location. The show doesn't involve animals, it's mostly just people doing acrobatics, magic and moderately impressive stunts. It was difficult for them to keep up the pace and perform every weekend, so there were some gaps.</p><p>For one of the performers, there was a larger-than-usual gap, of three months, while recovering from a broken leg. She broke her leg after falling through the stage when part of it collapsed owing to incorrect construction. The rigger that erected the stage for that show didn't get the memo explaining that extra bracing was required near the part of the stage where the acrobat would be landing after a jump through a flaming hoop as part of an experimental new section of the show. Immediately after the incident, a stagehand dropped the curtain. After making sure that the acrobat was being cared for, the ringmaster walked on to the stage to apologize to the audience and explain the situation.</p>",
+          body: "<p>In the late 1950s, a group of circus performers travelled across europe with their circus show. During their first year, they stopped at thirty four locations. At each stop they set up their circus tent on a Friday, put on a show that evening and then perform throughout the Saturday then dismantle the tent on Sunday and move on. The show doesn't involve animals, just people doing acrobatics, magic and moderately impressive stunts. They didn’t perform every weekend, so there were gaps.</p><p>In one of the shows, an acrobat broke her leg when part of the stage collapsed. The rigger that erected the stage wasn’t told that extra bracing was required near the part of the stage where she would be landing after jumping through a flaming hoop, a new section of the show. Immediately after the incident, a stagehand dropped the curtain and a medic attended. The ringmaster walked on to the stage to apologize to the audience.</p>",
           question: "Who dropped the curtain after the incident?",
           answers: [
             "The rigger",
@@ -130,37 +130,37 @@
           correctIndex: 2
         },
         {
-          title: "Test 3",
-          body: "Some body, can have html in it for paragraphs etc.",
-          question: "What?",
+          title: "Desert ruins",
+          body: "<p>In a desert on a distant planet is the ruins of a society of aliens that was brought to an end during a war between them and the inhabitants of a neighbouring planet. The invaders had vastly superior technology and weapons, they mined the area for its precious resources and left nothing for the inhabitants to eat. After a few years, they became extinct.</p><p>Millions of years after this unfortunate event, a small group of earthlings visited the ruined settlement and found what the invaders had left behind. They found books and medicines that the thieves thought were worthless, with further investigation upon returning to earth, they found that these medicines were very useful to humans and not just aliens. The books, once translated, provided exciting insights into areas of mathematics previously unexplored by humans. The alien race was clearly a very intelligent one that valued knowledge and health.</p>",
+          question: "Which of the following did the invaders take?",
           answers: [
-            "1",
-            "2",
-            "3"
+            "Food",
+            "Books",
+            "Medicines"
           ],
           correctIndex: 0
         },
         {
-          title: "Test 4",
-          body: "Some body, can have html in it for paragraphs etc.",
-          question: "What?",
+          title: "Footballer Tim",
+          body: "<p>Always wanted to be a footballer. Ever since his father took him to see their local team play, he wanted to be the player the huge crowds cheer for. He spent every night as soon as he came home from school playing football with his friends or even by himself. As soon as he could he joined the local under seven’s football club and was instantly a major player for the team. Tim the midfielder, number six.</p><p>Every Sunday Tim would be at the field bright and early to do some last minute practise. If Tim played a game where he did not score, he would always vow to get at least two in the next game. In that season alone, Tim scored nineteen goals in sixteen games. Tim was unstoppable. During the end of season, Tim still played as much football as possible. However, on one ordinary day in December, Tim broke his leg. He was devastated.</p>",
+          question: "How many goals did Tim score?",
           answers: [
-            "1",
-            "2",
-            "3"
+            "16",
+            "18",
+            "19"
           ],
-          correctIndex: 0
+          correctIndex: 2
         },
         {
-          title: "Test 5",
-          body: "Some body, can have html in it for paragraphs etc.",
-          question: "What?",
+          title: "The Bridge",
+          body: "<p>There was once a bridge, not that far from here. It was made of old worn granite, weathered by the passage of time. It sat astride a brook barely big enough to be called even that. The path that once crossed it meandered here and there, disappearing on either side into the wild woodland all around it. For many years, the bridge stood there, in weather-beaten disrepair.</p><p>Until one year a young boy came and stood upon the bridge. The child was young, full of life and fun. And, in years yet to come, the boy would return, to sit upon the bridge and gaze out at the world. But then, one day, the child did not return. The bridge stood alone, lost in the woodland once more, never to be found again. I have no doubt it remains and I hope to find it one day. But, until I can, all it will be is a childhood story, passed from my father to me.</p>",
+          question: "What type ofstone wasthebridge made of",
           answers: [
-            "1",
-            "2",
-            "3"
+            "Sandstone",
+            "Granite",
+            "Limestone"
           ],
-          correctIndex: 0
+          correctIndex: 1
         },
       ];
       
@@ -394,7 +394,7 @@
       </div>
       <div class="screen" id="screen-waiting">
         <!-- Just to make sure they are ready -->
-        <p>When you are ready begin this task, click continue.</p>
+        <p>When you are ready to begin this task, click continue.</p>
         <p><button onclick="doCombination()">Continue</button></p>
       </div>
       <div class="screen" id="screen-question">
@@ -415,7 +415,7 @@
           <p>How would you rate your preference for combination 1 (black on white)</p>
           <ul>
             <li><input type="radio" name="pref-1" value="5" id="pref-1-5" ><label for="pref-1-5">Very much prefered</label></li>
-            <li><input type="radio" name="pref-1" value="4" id="pref-1-4" ><label for="pref-1-4">Above averegely prefered</label></li>
+            <li><input type="radio" name="pref-1" value="4" id="pref-1-4" ><label for="pref-1-4">Above averagely prefered</label></li>
             <li><input type="radio" name="pref-1" value="3" id="pref-1-3" ><label for="pref-1-3">Averagely Prefered</label></li>
             <li><input type="radio" name="pref-1" value="2" id="pref-1-2" ><label for="pref-1-2">Below averagely prefered</label></li>
             <li><input type="radio" name="pref-1" value="1" id="pref-1-1" ><label for="pref-1-1">Not at all prefered</label></li>
@@ -423,7 +423,7 @@
           <p>How would you rate your preference for combination 2 (white on black)</p>
           <ul>
             <li><input type="radio" name="pref-2" value="5" id="pref-2-5" ><label for="pref-2-5">Very much prefered</label></li>
-            <li><input type="radio" name="pref-2" value="4" id="pref-2-4" ><label for="pref-2-4">Above averegely prefered</label></li>
+            <li><input type="radio" name="pref-2" value="4" id="pref-2-4" ><label for="pref-2-4">Above averagely prefered</label></li>
             <li><input type="radio" name="pref-2" value="3" id="pref-2-3" ><label for="pref-2-3">Averagely Prefered</label></li>
             <li><input type="radio" name="pref-2" value="2" id="pref-2-2" ><label for="pref-2-2">Below averagely prefered</label></li>
             <li><input type="radio" name="pref-2" value="1" id="pref-2-1" ><label for="pref-2-1">Not at all prefered</label></li>
@@ -431,7 +431,7 @@
           <p>How would you rate your preference for combination 3 (sepia on off-white)</p>
           <ul>
             <li><input type="radio" name="pref-3" value="5" id="pref-3-5" ><label for="pref-3-5">Very much prefered</label></li>
-            <li><input type="radio" name="pref-3" value="4" id="pref-3-4" ><label for="pref-3-4">Above averegely prefered</label></li>
+            <li><input type="radio" name="pref-3" value="4" id="pref-3-4" ><label for="pref-3-4">Above averagely prefered</label></li>
             <li><input type="radio" name="pref-3" value="3" id="pref-3-3" ><label for="pref-3-3">Averagely Prefered</label></li>
             <li><input type="radio" name="pref-3" value="2" id="pref-3-2" ><label for="pref-3-2">Below averagely prefered</label></li>
             <li><input type="radio" name="pref-3" value="1" id="pref-3-1" ><label for="pref-3-1">Not at all prefered</label></li>

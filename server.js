@@ -78,7 +78,7 @@ function removeCryptoNonceKey(key){
 var password;
 var username;
 if (secure){
-  password = passHash("foo");
+  password = "84e7ac76483fee1194e8999651acb3d48e5947ec532a194de0b51bca5231d04f";
   username = 'HACS';
 }
 
@@ -114,7 +114,7 @@ function handleRequest(request, response){
       catch (e) {
         fs.mkdir(dataDir);
       }
-      if (!fs.exists(dataFilePath)){
+      if (!fs.existsSync(dataFilePath)){
         fs.writeFileSync(dataFilePath, "[]", "utf8");
       }
       var currentFile = fs.readFileSync(dataFilePath, 'utf8');
