@@ -114,7 +114,7 @@ function handleRequest(request, response){
       catch (e) {
         fs.mkdir(dataDir);
       }
-      if (!fs.exists(dataFilePath)){
+      if (!fs.existsSync(dataFilePath)){
         fs.writeFileSync(dataFilePath, "[]", "utf8");
       }
       var currentFile = fs.readFileSync(dataFilePath, 'utf8');
